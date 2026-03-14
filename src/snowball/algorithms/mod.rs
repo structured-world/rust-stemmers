@@ -17,3 +17,4 @@ pub mod spanish;
 pub mod swedish;
 pub mod tamil;
 pub mod turkish;
+pub mod ukrainian;

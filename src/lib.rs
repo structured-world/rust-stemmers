@@ -53,7 +53,8 @@ pub enum Algorithm {
     Spanish,
     Swedish,
     Tamil,
-    Turkish
+    Turkish,
+    Ukrainian,
 }
 
 /// Wrapps a usable interface around the actual stemmer implementation
@@ -84,6 +85,7 @@ impl Stemmer {
             Algorithm::Swedish => Stemmer { stemmer: algorithms::swedish::stem },
             Algorithm::Tamil => Stemmer { stemmer: algorithms::tamil::stem },
             Algorithm::Turkish => Stemmer { stemmer: algorithms::turkish::stem },
+            Algorithm::Ukrainian => Stemmer { stemmer: algorithms::ukrainian::stem },
         }
     }
 
@@ -301,6 +303,24 @@ mod tests {
             stemms_to(voc.unwrap().as_str(),
                       res.unwrap().as_str(),
                       Algorithm::Greek);
+        }
+    }
+
+    #[test]
+    fn ukrainian_test() {
+        use std::fs;
+        use std::io;
+        use std::io::BufRead;
+
+        let vocab = io::BufReader::new(fs::File::open("test_data/voc_uk.txt").unwrap());
+        let result = io::BufReader::new(fs::File::open("test_data/res_uk.txt").unwrap());
+
+        let lines = vocab.lines().zip(result.lines());
+
+        for (voc, res) in lines {
+            stemms_to(voc.unwrap().as_str(),
+                      res.unwrap().as_str(),
+                      Algorithm::Ukrainian);
         }
     }
 
