@@ -7,6 +7,7 @@ repository = "https://github.com/CurrySoftware/rust-stemmers"
 readme = "README.md"
 keywords = ["nlp", "stemming", "information", "retrieval", "language"]
 license = "MIT/BSD-3-Clause"
+rust-version = "1.92"
 
 [dependencies]
 serde = "^1.0"
