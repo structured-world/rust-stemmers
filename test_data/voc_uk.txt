@@ -107,7 +107,6 @@
 йшов
 йшла
 йшли
-# negative tests (avoid over-stemming)
 і
 та
 але
@@ -136,7 +135,6 @@
 жити
 пити
 мити
-# extra consistency tests (real Ukrainian words)
 українська
 українського
 мова
@@ -163,7 +161,6 @@
 доброта
 перемога
 перемоги
-# real-word consistency tests (batch 2)
 свобода
 свободи
 свободу
@@ -184,7 +181,6 @@
 будівельники
 красивий
 красива
-# compound derivational+inflectional tests (from Vysotska 2024 paper stems)
 інформація
 інформації
 інформацію

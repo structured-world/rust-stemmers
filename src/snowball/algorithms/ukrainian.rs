@@ -161,30 +161,32 @@ static A_2: &'static [Among<Context>; 127] = &[
     Among("овано", -1, 2, None),
 ];
 
-static A_3: &'static [Among<Context>; 32] = &[
+static A_3: &'static [Among<Context>; 35] = &[
     Among("у", -1, 1, None),
     Among("єш", -1, 1, None),
+    Among("еш", -1, 1, None),
     Among("иш", -1, 1, None),
     Among("уть", -1, 1, None),
     Among("ють", -1, 1, None),
-    Among("ають", 4, 1, None),
+    Among("ають", 5, 1, None),
     Among("ю", -1, 1, None),
-    Among("ію", 6, 1, None),
-    Among("аю", 6, 1, None),
+    Among("ію", 7, 1, None),
+    Among("аю", 7, 1, None),
     Among("є", -1, 1, None),
     Among("ла", -1, 1, None),
     Among("в", -1, 1, None),
-    Among("ів", 11, 1, None),
-    Among("ав", 11, 1, None),
-    Among("ив", 11, 1, None),
+    Among("ів", 12, 1, None),
+    Among("ав", 12, 1, None),
+    Among("ив", 12, 1, None),
     Among("єте", -1, 1, None),
     Among("іте", -1, 1, None),
+    Among("ете", -1, 1, None),
     Among("ите", -1, 1, None),
     Among("йте", -1, 1, None),
     Among("ти", -1, 1, None),
-    Among("іти", 19, 1, None),
-    Among("ати", 19, 1, None),
-    Among("ити", 19, 1, None),
+    Among("іти", 21, 1, None),
+    Among("ати", 21, 1, None),
+    Among("ити", 21, 1, None),
     Among("ли", -1, 1, None),
     Among("й", -1, 1, None),
     Among("єм", -1, 1, None),
@@ -193,39 +195,41 @@ static A_3: &'static [Among<Context>; 32] = &[
     Among("ло", -1, 1, None),
     Among("ємо", -1, 1, None),
     Among("імо", -1, 1, None),
+    Among("емо", -1, 1, None),
     Among("имо", -1, 1, None),
 ];
 
-static A_4: &'static [Among<Context>; 29] = &[
-    Among("у", -1, 1, None),
-    Among("ях", -1, 1, None),
-    Among("ах", -1, 1, None),
-    Among("ю", -1, 1, None),
-    Among("єю", 3, 1, None),
-    Among("ею", 3, 1, None),
-    Among("ою", 3, 1, None),
-    Among("я", -1, 1, None),
-    Among("є", -1, 1, None),
-    Among("і", -1, 1, None),
-    Among("еві", 9, 1, None),
-    Among("ові", 9, 1, None),
-    Among("ї", -1, 1, None),
-    Among("а", -1, 1, None),
-    Among("ів", -1, 1, None),
-    Among("ев", -1, 1, None),
-    Among("е", -1, 1, None),
-    Among("и", -1, 1, None),
-    Among("ями", 17, 1, None),
-    Among("ами", 17, 1, None),
-    Among("ей", -1, 1, None),
-    Among("ям", -1, 1, None),
-    Among("єм", -1, 1, None),
-    Among("ам", -1, 1, None),
-    Among("ем", -1, 1, None),
-    Among("ом", -1, 1, None),
-    Among("о", -1, 1, None),
-    Among("тво", 26, 1, None),
-    Among("ство", 27, 1, None),
+static A_4: &'static [Among<Context>; 30] = &[
+    Among("у", -1, 2, None),
+    Among("ях", -1, 2, None),
+    Among("ах", -1, 2, None),
+    Among("ець", -1, 1, None),
+    Among("ю", -1, 2, None),
+    Among("єю", 4, 2, None),
+    Among("ею", 4, 2, None),
+    Among("ою", 4, 2, None),
+    Among("я", -1, 2, None),
+    Among("є", -1, 2, None),
+    Among("і", -1, 2, None),
+    Among("еві", 10, 2, None),
+    Among("ові", 10, 2, None),
+    Among("ї", -1, 2, None),
+    Among("а", -1, 2, None),
+    Among("ів", -1, 2, None),
+    Among("ев", -1, 2, None),
+    Among("е", -1, 2, None),
+    Among("и", -1, 2, None),
+    Among("ями", 18, 2, None),
+    Among("ами", 18, 2, None),
+    Among("ей", -1, 2, None),
+    Among("ям", -1, 2, None),
+    Among("єм", -1, 2, None),
+    Among("ам", -1, 2, None),
+    Among("ем", -1, 2, None),
+    Among("ом", -1, 2, None),
+    Among("о", -1, 2, None),
+    Among("тво", 27, 2, None),
+    Among("ство", 28, 2, None),
 ];
 
 static A_5: &'static [Among<Context>; 7] = &[
@@ -357,6 +361,7 @@ static A_10: &'static [Among<Context>; 4] = &[
 static G_v: &'static [u8; 5] = &[33, 65, 8, 192, 208];
 
 fn r_mark_regions(env: &mut SnowballEnv, context: &mut Context) -> bool {
+    let mut i_minStem : i32;
     context.i_pV = env.limit;
     context.i_p2 = env.limit;
     let v_1 = env.cursor;
@@ -382,6 +387,27 @@ fn r_mark_regions(env: &mut SnowballEnv, context: &mut Context) -> bool {
         break 'lab0;
     }
     env.cursor = v_1;
+    i_minStem = 0;
+    let v_2 = env.cursor;
+    'lab1: loop {
+        if env.cursor > i_minStem {
+            break 'lab1;
+        }
+        env.cursor = i_minStem;
+        if !env.hop(3) {
+            break 'lab1;
+        }
+        i_minStem = env.cursor;
+        break 'lab1;
+    }
+    env.cursor = v_2;
+    'lab2: loop {
+        if context.i_pV >= i_minStem{
+            break 'lab2;
+        }
+        context.i_pV = i_minStem;
+        break 'lab2;
+    }
     return true
 }
 
@@ -475,12 +501,22 @@ fn r_verb(env: &mut SnowballEnv, context: &mut Context) -> bool {
 }
 
 fn r_noun(env: &mut SnowballEnv, context: &mut Context) -> bool {
+    let mut among_var;
     env.ket = env.cursor;
-    if env.find_among_b(A_4, context) == 0 {
+    among_var = env.find_among_b(A_4, context);
+    if among_var == 0 {
         return false;
     }
     env.bra = env.cursor;
-    env.slice_del();
+    match among_var {
+        1 => {
+            env.slice_from("ц");
+        }
+        2 => {
+            env.slice_del();
+        }
+        _ => ()
+    }
     return true
 }
 
@@ -632,128 +668,153 @@ pub fn stem(env: &mut SnowballEnv) -> bool {
         break 'lab0;
     }
     env.cursor = v_1;
-    b_found_diminutive = false;
-    b_found_professional = false;
-    r_mark_regions(env, context);
-    env.limit_backward = env.cursor;
-    env.cursor = env.limit;
-    if env.cursor < context.i_pV {
-        return false;
-    }
-    let v_2 = env.limit_backward;
-    env.limit_backward = context.i_pV;
-    let v_3 = env.limit - env.cursor;
     'lab1: loop {
+        let v_2 = env.cursor;
         'lab2: loop {
-            let v_4 = env.limit - env.cursor;
-            'lab3: loop {
-                if !r_perfective_gerund(env, context) {
-                    break 'lab3;
-                }
+            let v_3 = env.cursor;
+            if !env.eq_s(&"окремо") {
                 break 'lab2;
             }
-            env.cursor = env.limit - v_4;
-            let v_5 = env.limit - env.cursor;
-            'lab4: loop {
-                if !r_reflexive(env, context) {
-                    env.cursor = env.limit - v_5;
-                    break 'lab4;
-                }
-                break 'lab4;
+            if env.cursor < env.limit {
+                break 'lab2;
             }
-            'lab5: loop {
+            env.cursor = v_3;
+            env.limit_backward = env.cursor;
+            env.cursor = env.limit;
+            env.ket = env.cursor;
+            if !env.eq_s_b(&"о") {
+                break 'lab2;
+            }
+            env.bra = env.cursor;
+            env.slice_del();
+            env.cursor = env.limit_backward;
+            break 'lab1;
+        }
+        env.cursor = v_2;
+        b_found_diminutive = false;
+        b_found_professional = false;
+        r_mark_regions(env, context);
+        env.limit_backward = env.cursor;
+        env.cursor = env.limit;
+        if env.cursor < context.i_pV {
+            return false;
+        }
+        let v_4 = env.limit_backward;
+        env.limit_backward = context.i_pV;
+        let v_5 = env.limit - env.cursor;
+        'lab3: loop {
+            'lab4: loop {
                 let v_6 = env.limit - env.cursor;
-                'lab6: loop {
-                    if !r_verbal_noun(env, context) {
-                        break 'lab6;
+                'lab5: loop {
+                    if !r_perfective_gerund(env, context) {
+                        break 'lab5;
                     }
-                    break 'lab5;
+                    break 'lab4;
                 }
                 env.cursor = env.limit - v_6;
                 let v_7 = env.limit - env.cursor;
+                'lab6: loop {
+                    if !r_reflexive(env, context) {
+                        env.cursor = env.limit - v_7;
+                        break 'lab6;
+                    }
+                    break 'lab6;
+                }
                 'lab7: loop {
+                    let v_8 = env.limit - env.cursor;
                     'lab8: loop {
-                        let v_8 = env.limit - env.cursor;
-                        'lab9: loop {
-                            if !r_professional(env, context) {
-                                break 'lab9;
-                            }
-                            b_found_professional = true;
+                        if !r_verbal_noun(env, context) {
                             break 'lab8;
                         }
-                        env.cursor = env.limit - v_8;
-                        if !r_diminutive(env, context) {
-                            env.cursor = env.limit - v_7;
-                            break 'lab7;
+                        break 'lab7;
+                    }
+                    env.cursor = env.limit - v_8;
+                    let v_9 = env.limit - env.cursor;
+                    'lab9: loop {
+                        'lab10: loop {
+                            let v_10 = env.limit - env.cursor;
+                            'lab11: loop {
+                                if !r_professional(env, context) {
+                                    break 'lab11;
+                                }
+                                b_found_professional = true;
+                                break 'lab10;
+                            }
+                            env.cursor = env.limit - v_10;
+                            if !r_diminutive(env, context) {
+                                env.cursor = env.limit - v_9;
+                                break 'lab9;
+                            }
+                            b_found_diminutive = true;
+                            break 'lab10;
                         }
-                        b_found_diminutive = true;
-                        break 'lab8;
+                        break 'lab9;
+                    }
+                    if b_found_professional {
+                        break 'lab3;
+                    }
+                    'lab12: loop {
+                        let v_11 = env.limit - env.cursor;
+                        'lab13: loop {
+                            if !r_adjective(env, context) {
+                                break 'lab13;
+                            }
+                            break 'lab12;
+                        }
+                        env.cursor = env.limit - v_11;
+                        'lab14: loop {
+                            if !r_verb(env, context) {
+                                break 'lab14;
+                            }
+                            break 'lab12;
+                        }
+                        env.cursor = env.limit - v_11;
+                        if !r_noun(env, context) {
+                            break 'lab3;
+                        }
+                        break 'lab12;
                     }
                     break 'lab7;
                 }
-                if b_found_professional {
-                    break 'lab1;
-                }
-                'lab10: loop {
-                    let v_9 = env.limit - env.cursor;
-                    'lab11: loop {
-                        if !r_adjective(env, context) {
-                            break 'lab11;
-                        }
-                        break 'lab10;
-                    }
-                    env.cursor = env.limit - v_9;
-                    'lab12: loop {
-                        if !r_verb(env, context) {
-                            break 'lab12;
-                        }
-                        break 'lab10;
-                    }
-                    env.cursor = env.limit - v_9;
-                    if !r_noun(env, context) {
-                        break 'lab1;
-                    }
-                    break 'lab10;
-                }
-                break 'lab5;
+                break 'lab4;
             }
-            break 'lab2;
+            break 'lab3;
         }
+        env.cursor = env.limit - v_5;
+        let v_12 = env.limit - env.cursor;
+        'lab15: loop {
+            if !r_diminutive_stem(env, context) {
+                env.cursor = env.limit - v_12;
+                break 'lab15;
+            }
+            b_found_diminutive = true;
+            break 'lab15;
+        }
+        if b_found_diminutive {
+            env.limit_backward = v_4;
+            return false;
+        }
+        if b_found_professional {
+            env.limit_backward = v_4;
+            return false;
+        }
+        let v_13 = env.limit - env.cursor;
+        'lab16: loop {
+            if !r_professional(env, context) {
+                env.cursor = env.limit - v_13;
+                break 'lab16;
+            }
+            break 'lab16;
+        }
+        let v_14 = env.limit - env.cursor;
+        r_derivational(env, context);
+        env.cursor = env.limit - v_14;
+        let v_15 = env.limit - env.cursor;
+        r_tidy_up(env, context);
+        env.cursor = env.limit - v_15;
+        env.limit_backward = v_4;
+        env.cursor = env.limit_backward;
         break 'lab1;
     }
-    env.cursor = env.limit - v_3;
-    let v_10 = env.limit - env.cursor;
-    'lab13: loop {
-        if !r_diminutive_stem(env, context) {
-            env.cursor = env.limit - v_10;
-            break 'lab13;
-        }
-        b_found_diminutive = true;
-        break 'lab13;
-    }
-    if b_found_diminutive {
-        env.limit_backward = v_2;
-        return false;
-    }
-    if b_found_professional {
-        env.limit_backward = v_2;
-        return false;
-    }
-    let v_11 = env.limit - env.cursor;
-    'lab14: loop {
-        if !r_professional(env, context) {
-            env.cursor = env.limit - v_11;
-            break 'lab14;
-        }
-        break 'lab14;
-    }
-    let v_12 = env.limit - env.cursor;
-    r_derivational(env, context);
-    env.cursor = env.limit - v_12;
-    let v_13 = env.limit - env.cursor;
-    r_tidy_up(env, context);
-    env.cursor = env.limit - v_13;
-    env.limit_backward = v_2;
-    env.cursor = env.limit_backward;
     return true
 }
