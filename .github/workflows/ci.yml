@@ -7,6 +7,30 @@ permissions:
   contents: read
 
 jobs:
+  release-config:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@683b588c487a69d01f6c6ddf40f036ff682cc2c8 # master
+        with:
+          toolchain: stable
+      - uses: taiki-e/install-action@a4d3f3f761dcd95cce1b72cb61cb6d1963438177 # v2
+        with:
+          tool: release-plz@0.3.168
+      # Exercise the standalone CLI, whose Git credential variable differs
+      # from release-plz/action. This job cannot publish or write to GitHub.
+      - name: Check the release CLI contract without publishing
+        env:
+          GIT_TOKEN: ${{ github.token }}
+        run: release-plz release --forge github --config .release-plz.toml --dry-run
+      - if: always()
+        run: cargo clean
   test:
     strategy:
       fail-fast: false
