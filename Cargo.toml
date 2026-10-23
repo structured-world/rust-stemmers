@@ -10,7 +10,7 @@ readme = "README.md"
 keywords = ["nlp", "stemming", "information", "retrieval", "language"]
 license = "MIT AND BSD-3-Clause"
 rust-version = "1.92"
-include = ["/src/**", "/examples/**", "/algorithms/**", "/Cargo.toml", "/README.md", "/LICENSE", "/LICENSE-SNOWBALL", "/NOTICE"]
+include = ["/src/**", "/examples/**", "/algorithms/**", "/snowball.lock.json", "/Cargo.toml", "/README.md", "/LICENSE", "/LICENSE-SNOWBALL", "/NOTICE"]
 
 [dependencies]
 serde = "^1.0"

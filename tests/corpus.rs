@@ -1,242 +1,102 @@
 // Source-only regression corpora: every supplied vocabulary/result pair must
-// preserve the upstream stemming result, including the Ukrainian additions.
+// match the independent Snowball Python backend at our pinned revision.
 extern crate structured_stemmers;
-use structured_stemmers::{Stemmer, Algorithm};
+use structured_stemmers::{Algorithm, Stemmer};
 
-fn stemms_to(lhs: &str, rhs: &str, stemmer: Algorithm) {
-    assert_eq!(Stemmer::create(stemmer).stem(lhs), rhs);
+fn check_corpus(code: &str, algorithm: Algorithm) {
+    use std::fs::File;
+    use std::io::{BufRead, BufReader};
+
+    let mut words =
+        BufReader::new(File::open(format!("test_data/voc_{}.txt", code)).unwrap()).lines();
+    let mut expected =
+        BufReader::new(File::open(format!("test_data/res_{}.txt", code)).unwrap()).lines();
+    let stemmer = Stemmer::create(algorithm);
+    let mut count = 0;
+    loop {
+        match (words.next(), expected.next()) {
+            (Some(word), Some(stem)) => {
+                let word = word.unwrap();
+                assert_eq!(stemmer.stem(&word), stem.unwrap(), "{}: {}", code, word);
+                count += 1;
+            }
+            (None, None) => break,
+            _ => panic!(
+                "{} corpus has unequal input/output lengths at row {}",
+                code,
+                count + 1
+            ),
+        }
+    }
+    // A truncated or empty file must never turn the release gate green.
+    assert!(count > 0, "{} corpus is empty", code);
 }
 
+// Each language remains independently reported by nextest; the shared helper
+// enforces complete coverage and identifies the offending word on failure.
 #[test]
 fn german_test() {
-    use std::fs;
-    use std::io;
-    use std::io::BufRead;
-
-    let vocab = io::BufReader::new(fs::File::open("test_data/voc_ger.txt").unwrap());
-    let result = io::BufReader::new(fs::File::open("test_data/res_ger.txt").unwrap());
-
-    let lines = vocab.lines().zip(result.lines());
-
-    for (voc, res) in lines {
-        stemms_to(voc.unwrap().as_str(),
-                  res.unwrap().as_str(),
-                  Algorithm::German);
-    }
+    check_corpus("ger", Algorithm::German);
 }
-
 #[test]
 fn english_test() {
-    use std::fs;
-    use std::io;
-    use std::io::BufRead;
-
-    let vocab = io::BufReader::new(fs::File::open("test_data/voc_en.txt").unwrap());
-    let result = io::BufReader::new(fs::File::open("test_data/res_en.txt").unwrap());
-
-    let lines = vocab.lines().zip(result.lines());
-
-    for (voc, res) in lines {
-        stemms_to(voc.unwrap().as_str(),
-                  res.unwrap().as_str(),
-                  Algorithm::English);
-    }
+    check_corpus("en", Algorithm::English);
 }
-
 #[test]
 fn french_test() {
-    use std::fs;
-    use std::io;
-    use std::io::BufRead;
-
-    let vocab = io::BufReader::new(fs::File::open("test_data/voc_fr.txt").unwrap());
-    let result = io::BufReader::new(fs::File::open("test_data/res_fr.txt").unwrap());
-
-    let lines = vocab.lines().zip(result.lines());
-
-    for (voc, res) in lines {
-        stemms_to(voc.unwrap().as_str(),
-                  res.unwrap().as_str(),
-                  Algorithm::French);
-    }
+    check_corpus("fr", Algorithm::French);
 }
-
 #[test]
 fn spanish_test() {
-    use std::fs;
-    use std::io;
-    use std::io::BufRead;
-
-    let vocab = io::BufReader::new(fs::File::open("test_data/voc_es.txt").unwrap());
-    let result = io::BufReader::new(fs::File::open("test_data/res_es.txt").unwrap());
-
-    let lines = vocab.lines().zip(result.lines());
-
-    for (voc, res) in lines {
-        stemms_to(voc.unwrap().as_str(),
-                  res.unwrap().as_str(),
-                  Algorithm::Spanish);
-    }
+    check_corpus("es", Algorithm::Spanish);
 }
-
 #[test]
 fn portuguese_test() {
-    use std::fs;
-    use std::io;
-    use std::io::BufRead;
-
-    let vocab = io::BufReader::new(fs::File::open("test_data/voc_pt.txt").unwrap());
-    let result = io::BufReader::new(fs::File::open("test_data/res_pt.txt").unwrap());
-
-    let lines = vocab.lines().zip(result.lines());
-
-    for (voc, res) in lines {
-        stemms_to(voc.unwrap().as_str(),
-                  res.unwrap().as_str(),
-                  Algorithm::Portuguese);
-    }
+    check_corpus("pt", Algorithm::Portuguese);
 }
-
 #[test]
 fn italian_test() {
-    use std::fs;
-    use std::io;
-    use std::io::BufRead;
-
-    let vocab = io::BufReader::new(fs::File::open("test_data/voc_it.txt").unwrap());
-    let result = io::BufReader::new(fs::File::open("test_data/res_it.txt").unwrap());
-
-    let lines = vocab.lines().zip(result.lines());
-
-    for (voc, res) in lines {
-        stemms_to(voc.unwrap().as_str(),
-                  res.unwrap().as_str(),
-                  Algorithm::Italian);
-    }
+    check_corpus("it", Algorithm::Italian);
 }
-
 #[test]
 fn romanian_test() {
-    use std::fs;
-    use std::io;
-    use std::io::BufRead;
-
-    let vocab = io::BufReader::new(fs::File::open("test_data/voc_ro.txt").unwrap());
-    let result = io::BufReader::new(fs::File::open("test_data/res_ro.txt").unwrap());
-
-    let lines = vocab.lines().zip(result.lines());
-
-    for (voc, res) in lines {
-        stemms_to(voc.unwrap().as_str(),
-                  res.unwrap().as_str(),
-                  Algorithm::Romanian);
-    }
+    check_corpus("ro", Algorithm::Romanian);
 }
-
 #[test]
 fn russian_test() {
-    use std::fs;
-    use std::io;
-    use std::io::BufRead;
-
-    let vocab = io::BufReader::new(fs::File::open("test_data/voc_ru.txt").unwrap());
-    let result = io::BufReader::new(fs::File::open("test_data/res_ru.txt").unwrap());
-
-    let lines = vocab.lines().zip(result.lines());
-
-    for (voc, res) in lines {
-        stemms_to(voc.unwrap().as_str(),
-                  res.unwrap().as_str(),
-                  Algorithm::Russian);
-    }
+    check_corpus("ru", Algorithm::Russian);
 }
-
 #[test]
 fn arabic_test() {
-    use std::fs;
-    use std::io;
-    use std::io::BufRead;
-
-    let vocab = io::BufReader::new(fs::File::open("test_data/voc_ar.txt").unwrap());
-    let result = io::BufReader::new(fs::File::open("test_data/res_ar.txt").unwrap());
-
-    let lines = vocab.lines().zip(result.lines());
-
-    for (voc, res) in lines {
-        stemms_to(voc.unwrap().as_str(),
-                  res.unwrap().as_str(),
-                  Algorithm::Arabic);
-    }
+    check_corpus("ar", Algorithm::Arabic);
 }
-
 #[test]
 fn finnish_test() {
-    use std::fs;
-    use std::io;
-    use std::io::BufRead;
-
-    let vocab = io::BufReader::new(fs::File::open("test_data/voc_fi.txt").unwrap());
-    let result = io::BufReader::new(fs::File::open("test_data/res_fi.txt").unwrap());
-
-    let lines = vocab.lines().zip(result.lines());
-
-    for (voc, res) in lines {
-        stemms_to(voc.unwrap().as_str(),
-                  res.unwrap().as_str(),
-                  Algorithm::Finnish);
-    }
+    check_corpus("fi", Algorithm::Finnish);
 }
-
 #[test]
 fn greek_test() {
-    use std::fs;
-    use std::io;
-    use std::io::BufRead;
-
-    let vocab = io::BufReader::new(fs::File::open("test_data/voc_el.txt").unwrap());
-    let result = io::BufReader::new(fs::File::open("test_data/res_el.txt").unwrap());
-
-    let lines = vocab.lines().zip(result.lines());
-
-    for (voc, res) in lines {
-        stemms_to(voc.unwrap().as_str(),
-                  res.unwrap().as_str(),
-                  Algorithm::Greek);
-    }
+    check_corpus("el", Algorithm::Greek);
 }
-
 #[test]
 fn ukrainian_test() {
-    use std::fs;
-    use std::io;
-    use std::io::BufRead;
-
-    let vocab = io::BufReader::new(fs::File::open("test_data/voc_uk.txt").unwrap());
-    let result = io::BufReader::new(fs::File::open("test_data/res_uk.txt").unwrap());
-
-    let lines = vocab.lines().zip(result.lines());
-
-    for (voc, res) in lines {
-        stemms_to(voc.unwrap().as_str(),
-                  res.unwrap().as_str(),
-                  Algorithm::Ukrainian);
-    }
+    check_corpus("uk", Algorithm::Ukrainian);
 }
-
 #[test]
 fn norwegian_test() {
-    use std::fs;
-    use std::io;
-    use std::io::BufRead;
+    check_corpus("no", Algorithm::Norwegian);
+}
 
-    let vocab = io::BufReader::new(fs::File::open("test_data/voc_no.txt").unwrap());
-    let result = io::BufReader::new(fs::File::open("test_data/res_no.txt").unwrap());
-
-    let lines = vocab.lines().zip(result.lines());
-
-    for (voc, res) in lines {
-        stemms_to(voc.unwrap().as_str(),
-                  res.unwrap().as_str(),
-                  Algorithm::Norwegian);
+// Official Ukrainian main-corpus cases which the previous generated algorithm
+// mishandled: short words, adjective stripping, and derivational noun suffixes.
+#[test]
+fn ukrainian_upstream_main_regressions() {
+    let stemmer = Stemmer::create(Algorithm::Ukrainian);
+    for &(word, expected) in &[
+        ("аа", "аа"),
+        ("абаксіально", "абаксіал"),
+        ("абатства", "абат"),
+    ] {
+        assert_eq!(stemmer.stem(word), expected, "{}", word);
     }
 }

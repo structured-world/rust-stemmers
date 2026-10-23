@@ -21,7 +21,7 @@ with tempfile.TemporaryDirectory(prefix="stemmers-consumer-") as tmp:
     root = pathlib.Path(tmp)
     with tarfile.open(archive) as tar:
         members = {pathlib.PurePosixPath(x.name).parts[1:] for x in tar.getmembers()}
-        for required in ("LICENSE", "LICENSE-SNOWBALL", "NOTICE"):
+        for required in ("LICENSE", "LICENSE-SNOWBALL", "NOTICE", "snowball.lock.json"):
             assert (required,) in members, required
         assert not any(p and p[0] == "test_data" for p in members)
         tar.extractall(root, filter="data")
@@ -35,6 +35,7 @@ with tempfile.TemporaryDirectory(prefix="stemmers-consumer-") as tmp:
 fn main() {
     assert_eq!(Stemmer::create(Algorithm::English).stem("fruitlessly"), "fruitless");
     assert_eq!(Stemmer::create(Algorithm::Ukrainian).stem("книга"), "книг");
+    assert_eq!(Stemmer::create(Algorithm::Ukrainian).stem("абатства"), "абат");
 }
 ''')
     run("cargo", "run", "--manifest-path", str(consumer / "Cargo.toml"), cwd=consumer)

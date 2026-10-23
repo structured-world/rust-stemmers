@@ -2,8 +2,12 @@ structured-stemmers is maintained at https://github.com/structured-world/rust-st
 It derives from CurrySoftware/rust-stemmers, copyright 2017 Jakob Demler (MIT).
 The stemming implementations derive from the Snowball project
 (https://snowballstem.org/) and retain its BSD-3-Clause license.
-The Ukrainian algorithm and its generated implementation are maintained in this
-fork. Generated source headers identify the generating Snowball version.
+Algorithms and Rust runtime are derived from snowballstem/snowball main commit
+6389c79f91cd67ed2de3ebdcf84ec8c2d2d23c11, including the upstream Ukrainian
+algorithm. Generated source headers identify the generating Snowball version.
+snowball.lock.json records this revision and the independently pinned reference
+corpus revision. Reference corpora and their separate licenses are not included
+in the library archive.
 
 The package retains both LICENSE and LICENSE-SNOWBALL. The Cargo license
 expression describes the combined distribution; it does not relicense upstream

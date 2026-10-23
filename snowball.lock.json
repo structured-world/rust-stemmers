@@ -1,0 +1,11 @@
+{
+  "source": "6389c79f91cd67ed2de3ebdcf84ec8c2d2d23c11",
+  "data": "019921c3a41c2b70063ee3feb215a00c8e594597",
+  "algorithms": {
+    "arabic": "ar", "armenian": null, "danish": null, "dutch": null,
+    "english": "en", "finnish": "fi", "french": "fr", "german": "ger",
+    "greek": "el", "hungarian": null, "italian": "it", "norwegian": "no",
+    "portuguese": "pt", "romanian": "ro", "russian": "ru", "spanish": "es",
+    "swedish": null, "tamil": null, "turkish": null, "ukrainian": "uk"
+  }
+}
