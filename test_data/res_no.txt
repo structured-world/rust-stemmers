@@ -18405,7 +18405,7 @@ tryll
 tryllesang
 tryllesang
 tryllesøvn
-tryllev
+tryllevers
 trym
 trymheim
 trym
@@ -18486,7 +18486,7 @@ tverrbjelk
 tverrgå
 tverrpolitisk
 tverrsektoriell
-tver
+tvers
 tvert
 tvertimot
 tvi
@@ -20344,7 +20344,7 @@ yggdrasil
 yh
 yin
 ymer
-ymer
+ymers
 yms
 yngr
 yngst

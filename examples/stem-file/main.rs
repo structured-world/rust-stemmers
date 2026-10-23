@@ -1,6 +1,6 @@
-extern crate rust_stemmers;
+extern crate structured_stemmers;
 
-use rust_stemmers::{Algorithm, Stemmer};
+use structured_stemmers::{Algorithm, Stemmer};
 
 fn main() {
     let en_stemmer = Stemmer::create(Algorithm::English);
