@@ -107,7 +107,7 @@ to accept only the `main` branch.
 
 For the first publication of the new name, an owner runs this same workflow on
 `main` with `bootstrap=true`. Its temporary `CRATES_IO_BOOTSTRAP_TOKEN` secret
-must be restricted to `structured-stemmers`, with `publish-new`, `publish-update`
+must be restricted to `structured-stemmers`, with `publish-new`
 and `trusted-publishing` permissions and a short expiration. CI publishes using
 release-plz and registers and verifies the Trusted Publisher. After success,
 revoke the temporary token and delete the secret. Normal releases do not read it.

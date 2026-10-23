@@ -1,7 +1,7 @@
 """Idempotently register this release workflow after the first CI publication.
 
 API contract: rust-lang/crates.io, src/controllers/trustpub/github_configs.
-The temporary token needs publish-new, publish-update and trusted-publishing
+The temporary token needs publish-new and trusted-publishing
 scopes for structured-stemmers only. No token or response body is logged.
 """
 import json
