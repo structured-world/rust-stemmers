@@ -105,10 +105,9 @@ workflow using crates.io Trusted Publishing, bound to this repository,
 `release.yml`, and the `crates-io` GitHub environment. Configure that environment
 to accept only the `main` branch.
 
-For the first publication of the new name, an owner runs this same workflow on
-`main` with `bootstrap=true`. Its temporary `CRATES_IO_BOOTSTRAP_TOKEN` secret
-must be restricted to `structured-stemmers`, with `publish-new`
-and `trusted-publishing` permissions and a short expiration. CI publishes using
-release-plz and registers and verifies the Trusted Publisher. After success,
-revoke the temporary token and delete the secret. Normal releases do not read it.
-
+An owner configures the Trusted Publisher in the crate's settings on crates.io.
+The workflow only consumes that OIDC binding: it does not register publishers
+or read a stored registry token. For a new crate name, publish the first
+qualified archive outside CI, configure its Trusted Publisher, and retry the
+release job. Normal releases need neither a bootstrap mode nor a registry-token
+secret.
