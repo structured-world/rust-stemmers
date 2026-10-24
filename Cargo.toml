@@ -1,6 +1,6 @@
 [package]
 name = "structured-stemmers"
-version = "1.2.0"
+version = "1.2.1"
 edition = "2015"
 authors = ["Jakob Demler <jdemler@curry-software.com>", "CurrySoftware <info@curry-software.com>"]
 description = "Pure Rust Snowball stemming, including Ukrainian, maintained by structured-world"
